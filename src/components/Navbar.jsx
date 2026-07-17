@@ -73,7 +73,7 @@ const Navbar = () => {
                   className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold tracking-widest uppercase transition-all duration-300 ${
                     link.active
                       ? 'text-primary bg-primary/10 border border-primary/30'
-                      : 'text-textSecondary hover:text-primary hover:bg-primary/5 border border-transparent'
+                      : 'text-white/100 hover:text-primary hover:bg-primary/5 border border-transparent'
                   }`}
                 >
                   <span className="text-lg">{link.icon}</span>

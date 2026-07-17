@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import AppRoutes from './routes/AppRoutes';
 import { FiMaximize, FiArrowUp } from 'react-icons/fi';
 import Preloader from './components/Preloader';
+import logoImg from './assets/logo.webp';
 
 const FullScreenToggle = () => {
   const toggleFullScreen = () => {
@@ -65,8 +66,56 @@ const BackToTop = () => {
   );
 };
 
+
+
 function App() {
   const [isLoaded, setIsLoaded] = React.useState(false);
+  const [hasAccess, setHasAccess] = React.useState(
+    localStorage.getItem('site_access') === 'true'
+  );
+  const [password, setPassword] = React.useState('');
+  const [error, setError] = React.useState('');
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (password === '1234') {
+      setHasAccess(true);
+      localStorage.setItem('site_access', 'true');
+    } else {
+      setError('Incorrect password');
+    }
+  };
+
+  if (!hasAccess) {
+    return (
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
+        <div className="max-w-md w-full bg-[#111111] p-8 rounded-2xl border border-white/10 shadow-2xl">
+          <div className="flex justify-center mb-6">
+            <img src={logoImg} alt="Logo" className="h-16 object-contain" style={{ filter: 'brightness(0) invert(1)' }} />
+          </div>
+          <h2 className="text-2xl font-bold text-center text-textPrimary mb-6">Protected Access</h2>
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter password..."
+                className="w-full px-4 py-3 bg-[#050505] border border-white/10 rounded-xl text-textPrimary focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+              />
+            </div>
+            {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+            <button
+              type="submit"
+              className="w-full py-3 bg-primary hover:bg-primary-dark text-background font-bold uppercase tracking-widest rounded-xl transition-colors"
+            >
+              Access Site
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <AuthProvider>

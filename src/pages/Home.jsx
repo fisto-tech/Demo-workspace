@@ -139,7 +139,7 @@ const Home = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -6 }}
                     transition={{ duration: 0.2 }}
-                    className="flex  gap-3 items-center justify-start xl:justify-end flex-1 min-w-[200px]"
+                    className="flex flex-col sm:flex-row gap-3 items-center justify-start xl:justify-end flex-1 min-w-[200px] w-full"
                   >
                     {/* Category Dropdown */}
                     <div className="relative w-full sm:w-auto shrink-0">
@@ -208,7 +208,7 @@ const Home = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -6 }}
                     transition={{ duration: 0.2 }}
-                    className="flex gap-3 items-center justify-start xl:justify-end flex-1 min-w-[200px]"
+                    className="flex flex-col sm:flex-row gap-3 items-center justify-start xl:justify-end flex-1 min-w-[200px] w-full"
                   >
                     {/* Active Category Dropdown */}
                     <div className="relative w-full sm:w-auto shrink-0">
