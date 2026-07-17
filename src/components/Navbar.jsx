@@ -18,12 +18,20 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { label: 'Website', icon: <FiGlobe />, active: true, href: null },
-    { label: 'IDC', icon: <FiMonitor />, active: false, href: 'https://fisto-idc-webpage.vercel.app/' },
-    { label: '2D 3D Animation', icon: <FiLayers />, active: false, href: 'https://2-d-3-d-animation-demo-workspace.vercel.app/ ' },
-    { label: 'Applications', icon: <FiGrid />, active: false, href: 'https://fisto-demo-applications.vercel.app/' },
-    { label: 'AR/VR', icon: <FiBox />, active: false, href: 'https://ar-vr-demo-workspace.vercel.app/' },
-  ];
+    { label: 'Website', icon: <FiGlobe />, href: null },
+    { label: 'IDC', icon: <FiMonitor />, href: 'https://demo-idc-workspace.vercel.app/' },
+    { label: '2D 3D Animation', icon: <FiLayers />, href: 'https://2-d-3-d-animation-demo-workspace.vercel.app/' },
+    { label: 'Applications', icon: <FiGrid />, href: 'https://application-demo-workspace.vercel.app/' },
+    { label: 'AR/VR', icon: <FiBox />, href: 'https://ar-vr-demo-workspace.vercel.app/' },
+  ].map(link => {
+    let active = false;
+    if (link.href === null) {
+      active = location.pathname === '/';
+    } else {
+      active = location.pathname === '/iframe' && location.search.includes(encodeURIComponent(link.href));
+    }
+    return { ...link, active };
+  });
 
   return (
     <motion.nav 
@@ -67,7 +75,9 @@ const Navbar = () => {
                   whileTap={{ scale: 0.97 }}
                   onClick={() => {
                     if (link.href) {
-                      window.open(link.href, '_blank');
+                      navigate(`/iframe?url=${encodeURIComponent(link.href)}`);
+                    } else {
+                      navigate('/');
                     }
                   }}
                   className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold tracking-widest uppercase transition-all duration-300 ${
@@ -104,7 +114,9 @@ const Navbar = () => {
                   key={link.label}
                   onClick={() => {
                     if (link.href) {
-                      window.open(link.href, '_blank');
+                      navigate(`/iframe?url=${encodeURIComponent(link.href)}`);
+                    } else {
+                      navigate('/');
                     }
                     setIsMobileMenuOpen(false);
                   }}

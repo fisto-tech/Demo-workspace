@@ -4,6 +4,7 @@ import { AnimatePresence } from 'framer-motion';
 import Home from '../pages/Home';
 import Details from '../pages/Details';
 import Login from '../pages/Login';
+import IframeView from '../pages/IframeView';
 
 const AppRoutes = () => {
   const location = useLocation();
@@ -14,6 +15,7 @@ const AppRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="/details/:id" element={<Details />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/iframe" element={<IframeView />} />
       </Routes>
     </AnimatePresence>
   );
