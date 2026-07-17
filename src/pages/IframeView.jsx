@@ -12,15 +12,14 @@ const IframeView = ({ url }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="w-full h-full flex flex-col flex-grow min-h-[calc(100vh-96px)]"
+      className="w-full h-full flex flex-col flex-grow"
     >
-      <iframe 
-        src={url} 
-        className="w-full flex-grow border-none" 
-        title="Demo Iframe"
-        allowFullScreen
-        style={{ height: 'calc(100vh - 80px)' }} // Default fallback
-      />
+     <iframe
+  src={url}
+  className="w-full flex-grow border-none h-[calc(100vh+20px)] md:h-[calc(100vh+4px)]"
+  title="Demo Iframe"
+  allowFullScreen
+/>
     </motion.div>
   );
 };
