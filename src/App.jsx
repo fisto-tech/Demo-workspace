@@ -5,7 +5,7 @@ import { WebsiteProvider } from './context/WebsiteContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import AppRoutes from './routes/AppRoutes';
-import { FiMaximize, FiArrowUp } from 'react-icons/fi';
+import { FiMaximize, FiArrowUp, FiEye, FiEyeOff } from 'react-icons/fi';
 import Preloader from './components/Preloader';
 import logoImg from './assets/logo.webp';
 
@@ -74,6 +74,7 @@ function App() {
     localStorage.getItem('site_access') === 'true'
   );
   const [password, setPassword] = React.useState('');
+  const [showPassword, setShowPassword] = React.useState(false);
   const [error, setError] = React.useState('');
 
   const handleLogin = (e) => {
@@ -95,14 +96,21 @@ function App() {
           </div>
           <h2 className="text-2xl font-bold text-center text-textPrimary mb-6">Protected Access</h2>
           <form onSubmit={handleLogin} className="space-y-4">
-            <div>
+            <div className="relative">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter password..."
-                className="w-full px-4 py-3 bg-[#050505] border border-white/10 rounded-xl text-textPrimary focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                className="w-full pl-4 pr-12 py-3 bg-[#050505] border border-white/10 rounded-xl text-textPrimary focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
               />
+              <button
+                type="button"
+                className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-white transition-colors"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+              </button>
             </div>
             {error && <p className="text-red-500 text-sm text-center">{error}</p>}
             <button
