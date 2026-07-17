@@ -18,7 +18,7 @@ const Hero = () => {
       <div className="absolute top-0 left-0 w-full h-full gold-glow pointer-events-none opacity-50"></div>
 
       {/* Top Right Admin Button */}
-      <div className="absolute top-4 right-4 md:top-6 md:right-8 z-20">
+      <div className="absolute top-2 right-2 sm:top-4 sm:right-4 md:top-6 md:right-8 z-20 scale-90 sm:scale-100 origin-top-right">
         {isAdmin ? (
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -41,7 +41,7 @@ const Hero = () => {
         )}
       </div>
 
-      <div className="w-[95%] md:w-[80%] lg:w-[60%] min-h-[30vh] lg:min-h-[30vh] max-w-none mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 lg:py-6 relative z-10 flex items-center justify-center">
+      <div className="w-[95%] md:w-[80%] lg:w-[60%] min-h-[30vh] lg:min-h-[30vh] max-w-none mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-12 pb-16 lg:py-6 relative z-10 flex items-center justify-center">
         <div className="w-full flex flex-col items-center justify-center text-center">
 
           <motion.div

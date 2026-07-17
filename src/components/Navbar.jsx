@@ -34,16 +34,20 @@ const Navbar = () => {
       className="sticky top-0 z-50 bg-[#050505]/90 backdrop-blur-md border-b border-border shadow-sm flex flex-col"
     >
       <div className="w-full w-[95%] md:w-[85%] max-w-none mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20 md:h-24">
+        <div className="flex justify-between items-center h-20 md:h-24 relative">
           
-          <div className="flex items-center gap-2">
-            {/* Hamburger Button */}
+          {/* Hamburger Button (Mobile) */}
+          <div className="lg:hidden flex-1 flex justify-start">
             <button 
-              className="lg:hidden text-gray-300 p-2 focus:outline-none"
+              className="text-gray-300 p-2 focus:outline-none"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               {isMobileMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
             </button>
+          </div>
+
+          {/* Logo */}
+          <div className="flex-1 flex justify-center lg:justify-start lg:flex-none">
             <motion.div 
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -58,6 +62,9 @@ const Navbar = () => {
               </div>
             </motion.div>
           </div>
+
+          {/* Right Side spacer for mobile to keep logo centered */}
+          <div className="lg:hidden flex-1 flex justify-end"></div>
 
           {/* Center Nav Links Desktop */}
           <div className="hidden lg:flex flex-1 justify-center">
