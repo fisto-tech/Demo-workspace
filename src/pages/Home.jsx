@@ -230,7 +230,7 @@ const Home = () => {
                     </div>
 
                     {/* Active Search */}
-                    <div className="relative w-full sm:w-auto sm:flex-1 min-w-[150px] max-w-sm">
+                    <div className="relative w-full sm:flex-1 min-w-[180px] max-w-full md:max-w-[240px]">
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none z-10">
                         <FiSearch className="text-primary/70" size={17} />
                       </div>
