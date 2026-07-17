@@ -15,7 +15,10 @@ const AppRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="/details/:id" element={<Details />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/iframe" element={<IframeView />} />
+        <Route path="/idc" element={<IframeView url="https://demo-idc-workspace.vercel.app/" />} />
+        <Route path="/2d-3d-animation" element={<IframeView url="https://2-d-3-d-animation-demo-workspace.vercel.app/" />} />
+        <Route path="/applications" element={<IframeView url="https://application-demo-workspace.vercel.app/" />} />
+        <Route path="/ar-vr" element={<IframeView url="https://ar-vr-demo-workspace.vercel.app/" />} />
       </Routes>
     </AnimatePresence>
   );

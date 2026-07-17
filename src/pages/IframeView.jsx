@@ -1,12 +1,8 @@
 import React from 'react';
-import { useLocation, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-const IframeView = () => {
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const url = searchParams.get('url');
-
+const IframeView = ({ url }) => {
   if (!url) {
     return <Navigate to="/" />;
   }
