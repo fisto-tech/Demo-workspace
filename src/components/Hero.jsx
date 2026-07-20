@@ -1,8 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { motion } from 'framer-motion';
 import { FiLogOut } from 'react-icons/fi';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 
 const Hero = () => {
   const { isAdmin, logout } = useContext(AuthContext);
@@ -12,6 +15,45 @@ const Hero = () => {
     logout();
     navigate('/');
   };
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+    let isAnimating = false;
+
+    const handleWheel = (e) => {
+      // If we are near the top and scrolling down
+      if (window.scrollY < 50 && e.deltaY > 0 && !isAnimating) {
+        e.preventDefault();
+        isAnimating = true;
+        
+        const section = document.getElementById('marketplace-grid');
+        if (section) {
+          // Calculate target with a small offset for the sticky header if needed, or exact top
+          const targetY = section.getBoundingClientRect().top + window.scrollY;
+          
+          gsap.to(window, {
+            duration: 1.2,
+            ease: 'power3.inOut',
+            scrollTo: { y: targetY, autoKill: false },
+            onComplete: () => {
+              setTimeout(() => { isAnimating = false; }, 100);
+            }
+          });
+        } else {
+          isAnimating = false;
+        }
+      } else if (isAnimating) {
+        e.preventDefault(); // Block scrolling while animating
+      }
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: false });
+
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
 
   return (
     <div className="relative bg-background overflow-hidden border-b border-border bg-mesh-pattern">

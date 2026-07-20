@@ -21,23 +21,22 @@ export const WebsiteProvider = ({ children }) => {
         } else {
           let finalData = json.data;
           
-          // In development mode, replace hashed Vite URLs from the DB 
-          // with the original local module imports so images work on localhost
-          if (import.meta.env.DEV) {
-            try {
-              const { initialWebsites } = await import('../data/websites.js');
-              finalData = finalData.map(site => {
-                if (site.imageUrl && site.imageUrl.includes('/assets/')) {
-                  const original = initialWebsites.find(w => w.websiteName === site.websiteName);
-                  if (original && original.imageUrl) {
-                    return { ...site, imageUrl: original.imageUrl };
-                  }
+          // Replace Vite URLs from the DB with the bundled module imports
+          // so default seeded images work perfectly on the live server
+          try {
+            const { initialWebsites } = await import('../data/websites.js');
+            finalData = finalData.map(site => {
+              // If it's a default seeded image (contains 'assets/')
+              if (site.imageUrl && (site.imageUrl.includes('/assets/') || site.imageUrl.includes('assets/'))) {
+                const original = initialWebsites.find(w => w.websiteName === site.websiteName);
+                if (original && original.imageUrl) {
+                  return { ...site, imageUrl: original.imageUrl };
                 }
-                return site;
-              });
-            } catch (err) {
-              console.error("Could not map dev images", err);
-            }
+              }
+              return site;
+            });
+          } catch (err) {
+            console.error("Could not map images", err);
           }
           
           setWebsites(finalData);
@@ -143,6 +142,26 @@ export const WebsiteProvider = ({ children }) => {
     }
   };
 
+  // ── Update Order ──────────────────────────────────────────────────────────
+  const updateWebsiteOrder = async (orderData) => {
+    try {
+      const res = await fetch(`${API_BASE}/update_website_order.php`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ orderData }),
+      });
+      const json = await res.json();
+      if (json.success) {
+        await fetchWebsites();
+      }
+      return json;
+    } catch (e) {
+      return { success: false, message: 'Network error.' };
+    }
+  };
+
   return (
     <WebsiteContext.Provider value={{
       websites,
@@ -151,6 +170,7 @@ export const WebsiteProvider = ({ children }) => {
       addWebsite,
       editWebsite,
       deleteWebsite,
+      updateWebsiteOrder,
       refreshWebsites: fetchWebsites,
     }}>
       {children}

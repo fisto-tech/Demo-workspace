@@ -25,7 +25,7 @@ const IframeView = ({ url }) => {
      <iframe
       src={url}
       // The iframe is slightly taller than the container (e.g. + 60px) to crop out its bottom icons
-      className="absolute top-0 left-0 w-full border-none h-[calc(100%+60px)]"
+      className="absolute top-0 left-0 w-full border-none h-[calc(100%-0px)]" style={{pointerEvents: "auto"}}
       title="Demo Iframe"
       allowFullScreen
      />

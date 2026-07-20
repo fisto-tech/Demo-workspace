@@ -5,7 +5,7 @@ import Hero from '../components/Hero';
 import WebsiteGrid from '../components/WebsiteGrid';
 import AddModal from '../components/AddModal';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiSearch, FiX, FiChevronDown, FiPlus } from 'react-icons/fi';
+import { FiSearch, FiX, FiChevronDown, FiPlus, FiMove } from 'react-icons/fi';
 
 const Home = () => {
   const { websites, addWebsite } = useContext(WebsiteContext);
@@ -13,6 +13,7 @@ const Home = () => {
   
   const [activeTab, setActiveTab] = useState('demo');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isRearrangeMode, setIsRearrangeMode] = useState(false);
 
   // Demo tab state
   const [demoSearch, setDemoSearch] = useState('');
@@ -274,9 +275,20 @@ const Home = () => {
               </AnimatePresence>
             </div>
 
-            {/* + Add Button — admin only */}
+            {/* + Add & Rearrange Buttons — admin only */}
             {isAdmin && (
-              <div className="order-2 xl:order-3 ml-auto xl:ml-0 shrink-0">
+              <div className="order-2 xl:order-3 ml-auto xl:ml-0 shrink-0 flex items-center gap-2">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setIsRearrangeMode(!isRearrangeMode)}
+                  title={isRearrangeMode ? "Disable Rearrange" : "Enable Rearrange"}
+                  className={`hidden lg:flex shrink-0 items-center justify-center w-[42px] h-[42px] rounded-full transition-all duration-300 border ${isRearrangeMode ? 'bg-[#5a4fcf] border-[#5a4fcf] text-white shadow-[0_0_15px_rgba(90,79,207,0.4)]' : 'border-white/20 text-white/70 hover:text-white'}`}
+                  style={!isRearrangeMode ? { backgroundColor: 'rgba(255,255,255,0.15)' } : {}}
+                >
+                  <FiMove size={16} />
+                </motion.button>
+
                 <motion.button
                   id="add-website-btn"
                   whileHover={{ scale: 1.05 }}
@@ -298,6 +310,7 @@ const Home = () => {
             key={activeTab}
             websites={activeTab === 'demo' ? filteredDemoWebsites : filteredActiveWebsites}
             sortBy={sortBy}
+            isRearrangeMode={isRearrangeMode}
           />
         </AnimatePresence>
       </main>

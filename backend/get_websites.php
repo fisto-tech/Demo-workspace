@@ -18,10 +18,17 @@ $host      = $_SERVER['HTTP_HOST'];
 $scriptDir = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
 $baseUrl   = $protocol . '://' . $host . $scriptDir;
 
+// Check if display_order column exists
+$colCheck = $conn->query("SHOW COLUMNS FROM websites LIKE 'display_order'");
+if ($colCheck && $colCheck->num_rows === 0) {
+    // Column doesn't exist, safely add it
+    $conn->query("ALTER TABLE websites ADD COLUMN display_order INT NOT NULL DEFAULT 0");
+}
+
 $result = $conn->query(
-    "SELECT id, website_name, category, website_link, description, project_type, company_name, image, created_at
+    "SELECT id, website_name, category, website_link, description, project_type, company_name, image, created_at, IFNULL(display_order, 0) as display_order
      FROM websites
-     ORDER BY created_at DESC"
+     ORDER BY display_order ASC, created_at DESC"
 );
 
 if (!$result) {
