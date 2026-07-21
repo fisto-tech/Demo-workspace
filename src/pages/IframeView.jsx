@@ -28,6 +28,7 @@ const IframeView = ({ url }) => {
       className="absolute top-0 left-0 w-full border-none h-[calc(100%-0px)]" style={{pointerEvents: "auto"}}
       title="Demo Iframe"
       allowFullScreen
+      allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
      />
     </motion.div>
   );
