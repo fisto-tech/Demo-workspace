@@ -14,6 +14,11 @@ const IframeView = ({ url }) => {
     return <Navigate to="/" />;
   }
 
+  let iframeUrl = url;
+  if (iframeUrl && iframeUrl.includes('drive.google.com') && iframeUrl.includes('/view')) {
+    iframeUrl = iframeUrl.replace(/\/view(\?.*)?$/, '/preview');
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -23,7 +28,7 @@ const IframeView = ({ url }) => {
       className="w-full relative overflow-hidden h-[calc(100vh-80px)] md:h-[calc(100vh-96px)]"
     >
      <iframe
-      src={url}
+      src={iframeUrl}
       // The iframe is slightly taller than the container (e.g. + 60px) to crop out its bottom icons
       className="absolute top-0 left-0 w-full border-none h-[calc(100%-0px)]" style={{pointerEvents: "auto"}}
       title="Demo Iframe"
